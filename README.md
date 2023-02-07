@@ -6,12 +6,18 @@ Para interagir com o RSP via outros app's é necessário utilizar o mecanismo An
 
 Para criar uma viagem utilize um [Intent](https://developer.android.com/reference/android/content/Intent) passando uma ação de visualização ([Intent.ACTION_VIEW](https://developer.android.com/reference/android/content/Intent#ACTION_VIEW)) e URI com o seguinte formato:
 
-```rsp://motora.ai/start-travel?driver_cpf=CPF_DO_MOTORISTA&car_plate=PLACA_DO_CARRO```
+```rsp://motora.ai/start-travel?driver_cpf=CPF_DO_MOTORISTA&car_plate=PLACA_DO_CARRO&service_code=CODIGO_DO_SERVICO&scheduled_begin_time=HORARIO_DE_INICIO_PLANEJADO```
 
 Um exemplo pode ser visto abaixo.
 
 ```kotlin
-val uri = Uri.parse("rsp://motora.ai/start-travel?driver_cpf=92835029060&car_plate=ABC0001")
+val driverCpf: String = "92835029060"
+val carPlate: String = "ABC0001"
+val serviceCode: String = "BLABLABLA"
+val scheduledBeginTime: Long = System.currentTimeMillis()
+
+val uri =
+    Uri.parse("rsp://motora.ai/start-travel?driver_cpf=$driverCpf&car_plate=$carPlate&service_code=$serviceCode&scheduled_begin_time=$scheduledBeginTime")
 
 val startTravelIntent = Intent(Intent.ACTION_VIEW, uri)
 ```
