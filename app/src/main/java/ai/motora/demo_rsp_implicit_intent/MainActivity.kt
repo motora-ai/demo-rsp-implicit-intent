@@ -69,16 +69,28 @@ class MainActivity : AppCompatActivity() {
                         // Para criar uma viagem utilize um Intent (https://developer.android.com/reference/android/content/Intent)
                         // passando uma ação de visualização (Intent.ACTION_VIEW) e URI com o seguinte formato:
                         //
-                        // "rsp://motora.ai/start-travel?driver_cpf=CPF_DO_MOTORISTA&car_plate=PLACA_DO_CARRO&service_code=CODIGO_DO_SERVICO&scheduled_begin_time=HORARIO_DE_INICIO_PLANEJADO"
+                        // "rsp://motora.ai/start-travel?driver_cpf=CPF_DO_MOTORISTA&car_plate=PLACA_DO_CARRO&service_code=CODIGO_DO_SERVICO&service_type=TIPO_DO_SERVICO&service_line=LINHA_DO_SERVICO&scheduled_begin_time=HORARIO_DE_INICIO_PLANEJADO"
                         //
                         // Um exemplo pode ser visto abaixo.
 
                         val driverCpf: String = "92835029060"
-                        val carPlate: String = "ABC0001"
+                        val carPlate: String = "ABC0002"
                         val serviceCode: String = "BLABLABLA"
+                        val serviceType: String = "BLEBLEBLE"
+                        val serviceLine: String = "BLIBLIBLI"
                         val scheduledBeginTime: Long = System.currentTimeMillis()
 
-                        val uri = Uri.parse("rsp://motora.ai/start-travel?driver_cpf=$driverCpf&car_plate=$carPlate&service_code=$serviceCode&scheduled_begin_time=$scheduledBeginTime")
+                        val uri = Uri.Builder()
+                            .scheme("rsp")
+                            .authority("motora.ai")
+                            .path("start-travel")
+                            .appendQueryParameter("driver_cpf", driverCpf)
+                            .appendQueryParameter("car_plate", carPlate)
+                            .appendQueryParameter("service_code", serviceCode)
+                            .appendQueryParameter("service_type", serviceType)
+                            .appendQueryParameter("service_line", serviceLine)
+                            .appendQueryParameter("scheduled_begin_time", scheduledBeginTime.toString())
+                            .build()
 
                         val startTravelIntent = Intent(Intent.ACTION_VIEW, uri)
 
@@ -123,7 +135,11 @@ class MainActivity : AppCompatActivity() {
                         val endTravelIntent =
                             Intent(
                                 Intent.ACTION_VIEW,
-                                Uri.parse("rsp://motora.ai/end-travel")
+                                Uri.Builder()
+                                    .scheme("rsp")
+                                    .authority("motora.ai")
+                                    .path("end-travel")
+                                    .build()
                             )
 
                         // Depois de criar o Intent basta utilizar o método startActivity passando o Intent criado anteriormente.
