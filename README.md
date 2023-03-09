@@ -11,12 +11,22 @@ Para criar uma viagem utilize um [Intent](https://developer.android.com/referenc
 Um exemplo pode ser visto abaixo.
 
 ```kotlin
-val driverCpf: String = "92835029060"
-val carPlate: String = "ABC0002"
-val serviceCode: String = "BLABLABLA"
-val serviceType: String = "BLEBLEBLE"
-val serviceLine: String = "BLIBLIBLI"
-val scheduledBeginTime: Long = System.currentTimeMillis()
+// Informações obrigatórias
+val driverCpf: String = "92835029060" // CPF do motorista (com ou sem '.' e '-')
+val carPlate: String = "ABC0001" // Placa do veículo (com ou sem '-')
+
+// Informações opcionais
+val serviceCode: String? = null // Código de serviço.
+                                // ex: "987435", "TUR 165980_1_3 (01)"  ou null
+
+val serviceType: String? = null // Tipo de serviço.
+                                // ex: "Linha", "Turismo", "Squad" ou null
+
+val serviceLine: String? = null // Linha de serviço.
+                                // ex: "120 - VITORIA X SAO PAULO" ou null
+
+val scheduledBeginTime: String? = null  // Data de ínicio previsto.
+                                        // ex: Data e hora em formato ISO-8601 "2023-01-01T01:01:01-03:00" ou null
 
 val uri = Uri.Builder()
     .scheme("rsp")
@@ -27,7 +37,7 @@ val uri = Uri.Builder()
     .appendQueryParameter("service_code", serviceCode)
     .appendQueryParameter("service_type", serviceType)
     .appendQueryParameter("service_line", serviceLine)
-    .appendQueryParameter("scheduled_begin_time", scheduledBeginTime.toString())
+    .appendQueryParameter("scheduled_begin_time", scheduledBeginTime)
     .build()
 
 val startTravelIntent = Intent(Intent.ACTION_VIEW, uri)
